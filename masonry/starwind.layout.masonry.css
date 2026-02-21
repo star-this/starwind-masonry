@@ -1,0 +1,46 @@
+@layer starwind.layout {
+    :where(sw-masonry) {
+        display: block;
+        column-width: var(--sw-masonry-column-width, 16rem);
+        column-count: var(--sw-masonry-columns, 3);
+        column-gap: var(
+            --sw-masonry-gap,
+            var(--sw-gap, var(--sw-space-s-m, 1rem))
+        );
+    }
+
+    :where(sw-masonry) > :where(*) {
+        display: inline-block;
+        inline-size: 100%;
+        break-inside: avoid;
+        margin-block: 0;
+        margin-block-end: var(
+            --sw-masonry-gap,
+            var(--sw-gap, var(--sw-space-s-m, 1rem))
+        );
+    }
+
+    @supports (grid-template-rows: masonry) {
+        :where(sw-masonry) {
+            display: grid;
+            gap: var(
+                --sw-masonry-gap,
+                var(--sw-gap, var(--sw-space-s-m, 1rem))
+            );
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(min(100%, var(--sw-masonry-column-width, 16rem)), 1fr)
+            );
+            grid-template-rows: masonry;
+            column-width: auto;
+            column-count: auto;
+            column-gap: normal;
+        }
+
+        :where(sw-masonry) > :where(*) {
+            display: block;
+            inline-size: auto;
+            margin-block-end: 0;
+        }
+    }
+}
